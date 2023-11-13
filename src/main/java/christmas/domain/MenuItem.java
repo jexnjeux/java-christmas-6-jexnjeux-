@@ -1,20 +1,22 @@
 package christmas.domain;
 
 public class MenuItem {
-    private final String name;
-    private final int price;
 
-    MenuItem(String name, int price) {
+    private final String name;
+    private final int amount;
+
+    MenuItem(String name, int amount) {
         this.name = name;
-        this.price = price;
+        this.amount = amount;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getPrice() {
-        return price;
+    public int getAmount() {
+        return amount;
     }
+
 
 }
