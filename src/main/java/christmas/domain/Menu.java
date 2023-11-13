@@ -33,4 +33,8 @@ public class Menu {
         return null;
     }
 
+    public List<MenuCategory> getCategories() {
+        return categories;
+    }
+
 }
