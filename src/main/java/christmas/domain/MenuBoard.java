@@ -1,8 +1,8 @@
 package christmas.domain;
 
-public class MenuFactory {
+public class MenuBoard {
 
-    private MenuFactory() {
+    private MenuBoard() {
 
     }
 
@@ -35,4 +35,5 @@ public class MenuFactory {
         menu.addMenu(beverage);
         return menu;
     }
+
 }
