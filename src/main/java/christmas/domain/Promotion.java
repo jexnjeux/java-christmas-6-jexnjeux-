@@ -33,12 +33,12 @@ public class Promotion {
         return 0;
     }
 
-    private static int getValueOfWeek(int date) {
+    private int getValueOfWeek(int date) {
         LocalDate reservationDate = LocalDate.of(YEAR, MONTH, date);
         return reservationDate.getDayOfWeek().getValue();
     }
 
-    private static boolean isWeekday(int value) {
+    private boolean isWeekday(int value) {
         return MONDAY <= value && value <= THURSDAY || value == SUNDAY;
     }
 
@@ -50,7 +50,7 @@ public class Promotion {
         return 0;
     }
 
-    private static boolean isWeekends(int value) {
+    private boolean isWeekends(int value) {
         return value == FRIDAY || value == SATURDAY;
     }
 

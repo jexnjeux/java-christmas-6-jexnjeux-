@@ -15,6 +15,7 @@ public class InputView {
     }
 
     public Order readOrder() {
+        int reservedDate = readDate();
         System.out.println("주문하실 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         String input = Console.readLine();
         while (!Validator.validateOrder(input)) {
@@ -22,10 +23,10 @@ public class InputView {
             input = Console.readLine();
         }
 
-        return createOrders(input);
+        return createOrders(input, reservedDate);
     }
 
-    private Order createOrders(String input) {
+    private Order createOrders(String input, int reservedDate) {
         Menu menu = MenuBoard.create();
         Order newOrder = new Order();
         String[] orderItems = input.split(",");
@@ -37,6 +38,7 @@ public class InputView {
             MenuItem item = new MenuItem(itemName, itemPrice);
             newOrder.addOrderItem(item, itemCount);
         }
+        newOrder.setReservedDate(reservedDate);
         return newOrder;
     }
 
