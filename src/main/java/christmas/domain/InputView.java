@@ -26,15 +26,19 @@ public class InputView {
     }
 
     private Order createOrders(String input) {
+        Menu menu = MenuBoard.create();
         Order newOrder = new Order();
         String[] orderItems = input.split(",");
         for (String orderItem : orderItems) {
             String[] order = orderItem.split("-");
             String itemName = order[0].trim();
+            int itemPrice = menu.findMenuPrice(itemName);
             int itemCount = Integer.parseInt(order[1].trim());
-            MenuItem item = new MenuItem(itemName, itemCount);
-            newOrder.addOrderItem(item, Integer.parseInt(order[1]));
+            MenuItem item = new MenuItem(itemName, itemPrice);
+            newOrder.addOrderItem(item, itemCount);
         }
         return newOrder;
     }
+
+
 }
