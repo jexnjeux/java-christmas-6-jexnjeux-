@@ -42,4 +42,16 @@ public class OutputView {
         return orderMap;
     }
 
+    public void printTotalAmountBeforeDiscount(Order order) {
+        int totalAmount = 0;
+        Map<MenuItem, Integer> orderItems = order.getOrderItems();
+        for (Entry<MenuItem, Integer> entry : orderItems.entrySet()) {
+            totalAmount += entry.getKey().getPrice() * entry.getValue();
+        }
+        System.out.println("<할인 전 총주문 금액>");
+        String formattedAmount = String.format("%,d", totalAmount);
+        System.out.println(formattedAmount + "원");
+        System.out.println();
+
+    }
 }
