@@ -13,7 +13,7 @@ public class Validator {
 
     public static boolean validateDate(String input) {
         try {
-            int num = Integer.parseInt(input);
+            int num = Integer.parseInt(input.trim());
             return (1 <= num && num <= 31);
         } catch (NumberFormatException e) {
             return false;

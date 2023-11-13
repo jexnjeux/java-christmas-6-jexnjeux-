@@ -1,8 +1,6 @@
 package christmas.domain;
 
 import camp.nextstep.edu.missionutils.Console;
-import java.util.HashMap;
-import java.util.Map;
 
 public class InputView {
 
@@ -16,7 +14,7 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    public Menu readMenu() {
+    public Order readOrder() {
         System.out.println("주문하실 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         String input = Console.readLine();
         while (!Validator.validateOrder(input)) {
@@ -27,26 +25,16 @@ public class InputView {
         return createOrders(input);
     }
 
-    private Menu createOrders(String input) {
-        Menu menuBoard = MenuBoard.create();
-        Menu menu = new Menu();
+    private Order createOrders(String input) {
+        Order newOrder = new Order();
         String[] orderItems = input.split(",");
-        Map<MenuType, MenuCategory> categoryMap = new HashMap<>();
         for (String orderItem : orderItems) {
             String[] order = orderItem.split("-");
-            MenuItem item = new MenuItem(order[0], Integer.parseInt(order[1]));
-            MenuType menuType = menuBoard.findMenuType(item.getName());
-            MenuCategory category = categoryMap.computeIfAbsent(menuType, MenuCategory::new);
-            category.addMenuItem(item);
+            String itemName = order[0].trim();
+            int itemCount = Integer.parseInt(order[1].trim());
+            MenuItem item = new MenuItem(itemName, itemCount);
+            newOrder.addOrderItem(item, Integer.parseInt(order[1]));
         }
-        addCategory(menu, categoryMap);
-        return menu;
-    }
-
-    private void addCategory(Menu menu, Map<MenuType, MenuCategory> categoryMap) {
-        for (MenuCategory category : categoryMap.values()) {
-            menu.addMenu(category);
-        }
-
+        return newOrder;
     }
 }
