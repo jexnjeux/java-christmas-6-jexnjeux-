@@ -40,6 +40,9 @@ public class Validator {
 
     private static boolean validateOrderItem(String orderItem, Set<String> uniqueItems) {
         String[] order = orderItem.split("-");
+        if (order.length != 2) {
+            return false;
+        }
 
         if (!menu.containsItem(order[0])) {
             return false;
