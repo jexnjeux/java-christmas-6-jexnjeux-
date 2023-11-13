@@ -35,6 +35,15 @@ public class MenuCategory {
         return null;
     }
 
+    public int findMenuPrice(String itemName) {
+        for (MenuItem item : items) {
+            if (item.getName().equals(itemName)) {
+                return item.getPrice();
+            }
+        }
+        return 0;
+    }
+
     public MenuType getType() {
         return type;
     }

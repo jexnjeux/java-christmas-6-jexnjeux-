@@ -33,6 +33,16 @@ public class Menu {
         return null;
     }
 
+    public int findMenuPrice(String itemName) {
+        int price = 0;
+        for (MenuCategory category : categories) {
+            if (category.findMenuPrice(itemName) != 0) {
+                price = category.findMenuPrice(itemName);
+            }
+        }
+        return price;
+    }
+
     public List<MenuCategory> getCategories() {
         return categories;
     }
