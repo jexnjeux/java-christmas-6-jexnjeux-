@@ -23,4 +23,14 @@ public class Menu {
         }
         return false;
     }
+
+    public MenuType findMenuType(String itemName) {
+        for (MenuCategory category : categories) {
+            if (category.findMenuType(itemName) != null) {
+                return category.getType();
+            }
+        }
+        return null;
+    }
+
 }

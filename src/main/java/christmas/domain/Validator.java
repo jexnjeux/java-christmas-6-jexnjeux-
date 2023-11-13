@@ -9,7 +9,7 @@ public class Validator {
     private Validator() {
     }
 
-    private static final Menu menu = MenuFactory.create();
+    private static final Menu menu = MenuBoard.create();
 
     public static boolean validateDate(String input) {
         try {

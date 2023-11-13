@@ -26,6 +26,15 @@ public class MenuCategory {
         return false;
     }
 
+    public MenuType findMenuType(String itemName) {
+        for (MenuItem item : items) {
+            if (item.getName().equals(itemName)) {
+                return type;
+            }
+        }
+        return null;
+    }
+
     public MenuType getType() {
         return type;
     }
