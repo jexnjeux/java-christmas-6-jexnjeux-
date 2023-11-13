@@ -17,6 +17,15 @@ public class MenuCategory {
         this.items.add(item);
     }
 
+    public boolean containsMenuItem(String itemName) {
+        for (MenuItem item : items) {
+            if (item.getName().equals(itemName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public MenuType getType() {
         return type;
     }

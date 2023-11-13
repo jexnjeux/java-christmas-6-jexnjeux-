@@ -14,4 +14,13 @@ public class Menu {
     public void addMenu(MenuCategory category) {
         this.categories.add(category);
     }
+
+    public boolean containsItem(String itemName) {
+        for (MenuCategory category : categories) {
+            if (category.containsMenuItem(itemName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
