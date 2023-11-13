@@ -35,7 +35,8 @@ public class Validator {
                 return false;
             }
         }
-        return true;
+
+        return validateBeverage(orderItems);
     }
 
     private static boolean validateOrderItem(String orderItem, Set<String> uniqueItems) {
@@ -62,5 +63,16 @@ public class Validator {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    private static boolean validateBeverage(String[] orderItems) {
+        Menu menuBoard = MenuBoard.create();
+        Set<MenuType> type = new HashSet<>();
+        for (String orderItem : orderItems) {
+            String[] order = orderItem.split("-");
+            MenuType menuType = menuBoard.findMenuType(order[0]);
+            type.add(menuType);
+        }
+        return type.size() != 1 || !type.contains(MenuType.BEVERAGE);
     }
 }
