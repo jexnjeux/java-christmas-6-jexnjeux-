@@ -25,7 +25,7 @@ public class Promotion {
         if (date > CHRISTMAS_DAY) {
             return 0;
         } else {
-            return DISCOUNT_STARTING_PRICE + (date * DAILY_DISCOUNT_PRICE);
+            return DISCOUNT_STARTING_PRICE + ((date - 1) * DAILY_DISCOUNT_PRICE);
         }
     }
 
