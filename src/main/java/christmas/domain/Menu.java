@@ -44,8 +44,4 @@ public class Menu {
         return price;
     }
 
-    public List<MenuCategory> getCategories() {
-        return categories;
-    }
-
 }
