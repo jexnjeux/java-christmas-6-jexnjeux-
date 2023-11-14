@@ -1,6 +1,11 @@
-package christmas.domain;
+package christmas.controller;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.domain.Menu;
+import christmas.domain.MenuBoard;
+import christmas.domain.MenuItem;
+import christmas.domain.Order;
+import christmas.utils.Validator;
 
 public class InputView {
 

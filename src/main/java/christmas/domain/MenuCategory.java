@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.type.MenuType;
 import java.util.ArrayList;
 import java.util.List;
 

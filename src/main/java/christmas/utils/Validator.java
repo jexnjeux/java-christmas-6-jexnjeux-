@@ -1,5 +1,8 @@
-package christmas.domain;
+package christmas.utils;
 
+import christmas.domain.Menu;
+import christmas.domain.MenuBoard;
+import christmas.type.MenuType;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

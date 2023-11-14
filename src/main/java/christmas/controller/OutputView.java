@@ -1,5 +1,9 @@
-package christmas.domain;
+package christmas.controller;
 
+import christmas.domain.Menu;
+import christmas.domain.MenuBoard;
+import christmas.domain.MenuItem;
+import christmas.domain.Order;
 import christmas.service.BadgeService;
 import christmas.service.DiscountService;
 import christmas.service.PromotionService;

@@ -2,6 +2,7 @@ package christmas.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import christmas.type.MenuType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

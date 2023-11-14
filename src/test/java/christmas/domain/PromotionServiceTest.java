@@ -2,18 +2,19 @@ package christmas.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import christmas.service.PromotionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PromotionTest {
+class PromotionServiceTest {
 
-    Promotion promotion = new Promotion();
+    PromotionService promotionService = new PromotionService();
 
     @DisplayName("크리스마스 할인 적용")
     @Test
     void testChristmasDiscount() {
         int date = 2;
-        int discount = promotion.calculateChristmasDiscount(date);
+        int discount = promotionService.calculateChristmasDiscount(date);
         assertEquals(1200, discount);
     }
 
@@ -21,7 +22,7 @@ class PromotionTest {
     @Test
     void testChristmasDiscount_AfterChristmas() {
         int date = 30;
-        int discount = promotion.calculateChristmasDiscount(date);
+        int discount = promotionService.calculateChristmasDiscount(date);
         assertEquals(0, discount);
     }
 
@@ -29,7 +30,7 @@ class PromotionTest {
     @Test
     void testWeekdaysDiscount() {
         int date = 6;
-        int discount = promotion.calculateWeekdaysDiscount(date, 2);
+        int discount = promotionService.calculateWeekdaysDiscount(date, 2);
         assertEquals(2023 * 2, discount);
     }
 
@@ -37,7 +38,7 @@ class PromotionTest {
     @Test
     void testWeekdaysDiscount_NotWeekends() {
         int date = 16;
-        int discount = promotion.calculateWeekdaysDiscount(date, 2);
+        int discount = promotionService.calculateWeekdaysDiscount(date, 2);
         assertEquals(0, discount);
     }
 
@@ -45,7 +46,7 @@ class PromotionTest {
     @Test
     void testWeekendsDiscount() {
         int date = 9;
-        int discount = promotion.calculateWeekendsDiscount(date, 2);
+        int discount = promotionService.calculateWeekendsDiscount(date, 2);
         assertEquals(2023 * 2, discount);
     }
 
@@ -53,7 +54,7 @@ class PromotionTest {
     @Test
     void testWeekendsDiscount_NotWeekdays() {
         int date = 19;
-        int discount = promotion.calculateWeekendsDiscount(date, 2);
+        int discount = promotionService.calculateWeekendsDiscount(date, 2);
         assertEquals(0, discount);
     }
 
@@ -61,7 +62,7 @@ class PromotionTest {
     @Test
     void testFreeGift() {
         int beforeTotalPrice = 130000;
-        boolean result = promotion.isFreeGiftEligible(beforeTotalPrice);
+        boolean result = promotionService.isFreeGiftEligible(beforeTotalPrice);
         assertTrue(result);
     }
 
@@ -69,7 +70,7 @@ class PromotionTest {
     @Test
     void testFreeGift_NotUnder() {
         int beforeTotalPrice = 100000;
-        boolean result = promotion.isFreeGiftEligible(beforeTotalPrice);
+        boolean result = promotionService.isFreeGiftEligible(beforeTotalPrice);
         assertFalse(result);
     }
 

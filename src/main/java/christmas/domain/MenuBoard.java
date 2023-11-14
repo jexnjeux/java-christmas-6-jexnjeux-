@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import christmas.type.MenuType;
+
 public class MenuBoard {
 
     private MenuBoard() {
