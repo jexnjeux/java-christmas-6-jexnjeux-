@@ -8,13 +8,10 @@ public class DiscountService {
 
     private final Map<String, Integer> discountDetails;
     private final PromotionService promotionService;
+    private final int FREE_GIFT_PRICE = 25000;
 
     public DiscountService() {
         this.discountDetails = new HashMap<>();
-        discountDetails.put("christmas", 0);
-        discountDetails.put("weekdays", 0);
-        discountDetails.put("weekends", 0);
-        discountDetails.put("special", 0);
         this.promotionService = new PromotionService();
     }
 
@@ -25,6 +22,7 @@ public class DiscountService {
             calculateWeekdaysDiscount(order, discountDetails);
             calculateWeekendsDiscount(order, discountDetails);
             calculateSpecialDiscount(order, discountDetails);
+            calculateFreeGift(order, discountDetails);
         }
         return discountDetails;
     }
@@ -37,13 +35,15 @@ public class DiscountService {
     }
 
     private int calculateWeekdaysDiscount(Order order, Map<String, Integer> discountDetails) {
-        int weekdaysDiscount = promotionService.calculateWeekdaysDiscount(order.getReservedDate(), order.getOrderItems());
+        int weekdaysDiscount = promotionService.calculateWeekdaysDiscount(order.getReservedDate(),
+                order.getOrderItems());
         discountDetails.put("weekdays", weekdaysDiscount);
         return weekdaysDiscount;
     }
 
     private int calculateWeekendsDiscount(Order order, Map<String, Integer> discountDetails) {
-        int weekendsDiscount = promotionService.calculateWeekendsDiscount(order.getReservedDate(), order.getOrderItems());
+        int weekendsDiscount = promotionService.calculateWeekendsDiscount(order.getReservedDate(),
+                order.getOrderItems());
         discountDetails.put("weekends", weekendsDiscount);
         return weekendsDiscount;
     }
@@ -52,6 +52,14 @@ public class DiscountService {
         int specialDiscount = promotionService.calculateSpecialDiscount(order.getReservedDate());
         discountDetails.put("special", specialDiscount);
         return specialDiscount;
+    }
+
+    private Integer calculateFreeGift(Order order, Map<String, Integer> discountDetails) {
+        if (promotionService.isFreeGiftEligible(Order.sumPrice(order))) {
+            discountDetails.put("freegift", FREE_GIFT_PRICE);
+            return FREE_GIFT_PRICE;
+        }
+        return null;
     }
 
 }

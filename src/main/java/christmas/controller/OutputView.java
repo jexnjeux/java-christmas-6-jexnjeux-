@@ -24,8 +24,11 @@ public class OutputView {
             "christmas", "크리스마스 디데이 할인",
             "weekdays", "평일 할인",
             "weekends", "주말 할인",
-            "special", "특별 할인"
+            "special", "특별 할인",
+            "freegift", "증정 할인"
     );
+
+    private final int FREE_GIFT_PRICE = 25000;
 
     public OutputView() {
         promotionService = new PromotionService();
@@ -34,6 +37,8 @@ public class OutputView {
 
     public void printOrder(Order order) {
         menuBoard = MenuBoard.create();
+        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n", order.getReservedDate());
+        System.out.println();
         System.out.println("<주문 메뉴>");
         Map<MenuItem, Integer> orderItems = order.getOrderItems();
         Map<MenuType, List<MenuItem>> orderMap = createOrderMap(orderItems);
@@ -92,16 +97,23 @@ public class OutputView {
         Map<String, Integer> discountDetails = discountService.calculateDiscount(order);
         if (discountDetails.isEmpty()) {
             System.out.println("없음");
-        } else {
-            for (Map.Entry<String, Integer> entry : discountDetails.entrySet()) {
-                printDiscount(entry.getKey(), entry.getValue());
+            return;
+        }
+        for (Map.Entry<String, Integer> entry : discountDetails.entrySet()) {
+            printDiscount(entry.getKey(), entry.getValue());
+        }
+
+        System.out.println("\n<총혜택 금액>");
+        int totalDiscount = 0;
+        boolean isFreeGiftEligible = false;
+        for (Entry<String, Integer> entry : discountDetails.entrySet()) {
+            totalDiscount += entry.getValue();
+            if (entry.getKey().equals("freegift") && entry.getValue() > 0) {
+                isFreeGiftEligible = true;
             }
         }
-        System.out.println();
-        System.out.println("<총혜택 금액>");
-        int totalDiscount = discountDetails.values().stream().mapToInt(Integer::intValue).sum();
         System.out.printf("%,d원%n", totalDiscount * -1);
-        printDiscountedPrice(order, totalDiscount);
+        printDiscountedPrice(order, totalDiscount, isFreeGiftEligible);
         printBadge(totalDiscount);
     }
 
@@ -111,14 +123,19 @@ public class OutputView {
         }
     }
 
-    private void printDiscountedPrice(Order order, int totalDiscount) {
-        System.out.println("<할인 후 예상 결제 금액>");
+    private void printDiscountedPrice(Order order, int totalDiscount, boolean isFreeGiftEligible) {
+        System.out.println("\n<할인 후 예상 결제 금액>");
+        if (isFreeGiftEligible) {
+            totalDiscount -= FREE_GIFT_PRICE;
+        }
+
         int discountedPrice = Order.sumPrice(order) - totalDiscount;
         System.out.printf("%,d원%n", discountedPrice);
     }
 
     public void printBadge(int totalDiscount) {
         String badge = BadgeService.grantBadge(totalDiscount);
+        System.out.println();
         System.out.println("<12월 이벤트 배지>");
         System.out.println(badge);
     }

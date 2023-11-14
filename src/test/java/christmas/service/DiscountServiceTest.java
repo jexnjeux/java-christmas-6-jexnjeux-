@@ -61,10 +61,10 @@ class DiscountServiceTest {
 
         Map<String, Integer> discountDetails = discountService.calculateDiscount(order);
 
-        assertEquals(0, discountDetails.get("christmas"));
-        assertEquals(0, discountDetails.get("weekdays"));
-        assertEquals(0, discountDetails.get("weekends"));
-        assertEquals(0, discountDetails.get("special"));
+        assertEquals(null, discountDetails.get("christmas"));
+        assertEquals(null, discountDetails.get("weekdays"));
+        assertEquals(null, discountDetails.get("weekends"));
+        assertEquals(null, discountDetails.get("special"));
     }
 
 }
