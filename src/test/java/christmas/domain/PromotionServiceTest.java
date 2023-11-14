@@ -1,6 +1,8 @@
 package christmas.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import christmas.service.PromotionService;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +17,7 @@ class PromotionServiceTest {
     void testChristmasDiscount() {
         int date = 2;
         int discount = promotionService.calculateChristmasDiscount(date);
-        assertEquals(1200, discount);
+        assertEquals(1100, discount);
     }
 
     @DisplayName("크리스마스 이후는 할인 적용 안됨")
@@ -30,7 +32,9 @@ class PromotionServiceTest {
     @Test
     void testWeekdaysDiscount() {
         int date = 6;
-        int discount = promotionService.calculateWeekdaysDiscount(date, 2);
+        Order order = new Order();
+        order.addOrderItem(new MenuItem("초코케이크", 15000), 2);
+        int discount = promotionService.calculateWeekdaysDiscount(date, order.orderItems);
         assertEquals(2023 * 2, discount);
     }
 
@@ -38,7 +42,9 @@ class PromotionServiceTest {
     @Test
     void testWeekdaysDiscount_NotWeekends() {
         int date = 16;
-        int discount = promotionService.calculateWeekdaysDiscount(date, 2);
+        Order order = new Order();
+        order.addOrderItem(new MenuItem("초코케이크", 15000), 2);
+        int discount = promotionService.calculateWeekdaysDiscount(date, order.orderItems);
         assertEquals(0, discount);
     }
 
@@ -46,7 +52,9 @@ class PromotionServiceTest {
     @Test
     void testWeekendsDiscount() {
         int date = 9;
-        int discount = promotionService.calculateWeekendsDiscount(date, 2);
+        Order order = new Order();
+        order.addOrderItem(new MenuItem("바비큐립", 54000), 2);
+        int discount = promotionService.calculateWeekendsDiscount(date, order.getOrderItems());
         assertEquals(2023 * 2, discount);
     }
 
@@ -54,7 +62,9 @@ class PromotionServiceTest {
     @Test
     void testWeekendsDiscount_NotWeekdays() {
         int date = 19;
-        int discount = promotionService.calculateWeekendsDiscount(date, 2);
+        Order order = new Order();
+        order.addOrderItem(new MenuItem("바비큐립", 54000), 2);
+        int discount = promotionService.calculateWeekendsDiscount(date, order.getOrderItems());
         assertEquals(0, discount);
     }
 

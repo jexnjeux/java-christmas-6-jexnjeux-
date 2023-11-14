@@ -1,9 +1,16 @@
 package christmas.service;
 
+import christmas.domain.Menu;
+import christmas.domain.MenuBoard;
+import christmas.domain.MenuItem;
+import christmas.domain.Order;
+import christmas.type.MenuType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class PromotionService {
 
@@ -20,6 +27,11 @@ public class PromotionService {
     private static final int SATURDAY = 6;
     private static final int SUNDAY = 7;
     private static final List<Integer> SPECIAL_DAYS = new ArrayList<>(Arrays.asList(3, 10, 17, 24, 25, 31));
+    private Menu menuBoard;
+
+    public PromotionService() {
+        menuBoard = MenuBoard.create();
+    }
 
     public int calculateChristmasDiscount(int date) {
         if (date > CHRISTMAS_DAY) {
@@ -29,12 +41,19 @@ public class PromotionService {
         }
     }
 
-    public int calculateWeekdaysDiscount(int date, int menuSize) {
+    public int calculateWeekdaysDiscount(int date, Map<MenuItem, Integer> orderItems) {
         int value = getValueOfWeek(date);
+        int count = 0;
         if (isWeekday(value)) {
-            return menuSize * UNIT_DISCOUNT_PRICE;
+            for (Entry<MenuItem, Integer> entry : orderItems.entrySet()) {
+                String itemName = entry.getKey().getName();
+                MenuType itemType = menuBoard.findMenuType(itemName);
+                if (itemType == MenuType.DESERT) {
+                    count += entry.getValue();
+                }
+            }
         }
-        return 0;
+        return count * UNIT_DISCOUNT_PRICE;
     }
 
     private int getValueOfWeek(int date) {
@@ -46,12 +65,19 @@ public class PromotionService {
         return MONDAY <= value && value <= THURSDAY || value == SUNDAY;
     }
 
-    public int calculateWeekendsDiscount(int date, int menuSize) {
+    public int calculateWeekendsDiscount(int date, Map<MenuItem, Integer> orderItems) {
         int value = getValueOfWeek(date);
+        int count = 0;
         if (isWeekends(value)) {
-            return menuSize * UNIT_DISCOUNT_PRICE;
+            for (Entry<MenuItem, Integer> entry : orderItems.entrySet()) {
+                String itemName = entry.getKey().getName();
+                MenuType itemType = menuBoard.findMenuType(itemName);
+                if (itemType == MenuType.MAIN) {
+                    count += entry.getValue();
+                }
+            }
         }
-        return 0;
+        return count * UNIT_DISCOUNT_PRICE;
     }
 
     public int calculateSpecialDiscount(int date) {

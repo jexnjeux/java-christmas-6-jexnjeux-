@@ -33,13 +33,13 @@ public class DiscountService {
     }
 
     private int calculateWeekdaysDiscount(Order order, Map<String, Integer> discountDetails) {
-        int weekdaysDiscount = promotionService.calculateWeekdaysDiscount(order.getReservedDate(), order.getOrderItems().size());
+        int weekdaysDiscount = promotionService.calculateWeekdaysDiscount(order.getReservedDate(), order.getOrderItems());
         discountDetails.put("weekdays", weekdaysDiscount);
         return weekdaysDiscount;
     }
 
     private int calculateWeekendsDiscount(Order order, Map<String, Integer> discountDetails) {
-        int weekendsDiscount = promotionService.calculateWeekendsDiscount(order.getReservedDate(), order.getOrderItems().size());
+        int weekendsDiscount = promotionService.calculateWeekendsDiscount(order.getReservedDate(), order.getOrderItems());
         discountDetails.put("weekends", weekendsDiscount);
         return weekendsDiscount;
     }
