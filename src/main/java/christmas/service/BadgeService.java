@@ -1,12 +1,16 @@
-package christmas.domain;
+package christmas.service;
 
-public class BadgeProvider {
+public class BadgeService {
 
     private static final int SANTA_THRESHOLD = 20000;
     private static final int TREE_THRESHOLD = 10000;
     private static final int STAR_THRESHOLD = 5000;
 
-    public String grantBadge(int totalDiscount) {
+    private BadgeService() {
+
+    }
+
+    public static String grantBadge(int totalDiscount) {
         if (totalDiscount >= SANTA_THRESHOLD) {
             return "산타";
         } else if (totalDiscount >= TREE_THRESHOLD) {

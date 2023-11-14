@@ -1,11 +1,11 @@
-package christmas.domain;
+package christmas.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Promotion {
+public class PromotionService {
 
     private static final int DAILY_DISCOUNT_PRICE = 100;
     private static final int UNIT_DISCOUNT_PRICE = 2023;

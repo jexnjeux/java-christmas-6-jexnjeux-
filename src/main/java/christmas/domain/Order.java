@@ -9,10 +9,12 @@ public class Order {
     private int reservedDate;
 
     Map<MenuItem, Integer> orderItems;
+    private int totalPrice;
 
     public Order() {
         this.orderItems = new HashMap<>();
         this.reservedDate = -1;
+        this.totalPrice = 0;
     }
 
     public void addOrderItem(MenuItem item, int quantity) {
