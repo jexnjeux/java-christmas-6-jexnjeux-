@@ -32,31 +32,40 @@ public class Validator {
     public static boolean validateOrder(String input) {
         String[] orderItems = orderItemParser(input);
         Set<String> uniqueItems = new HashSet<>();
+        try {
 
-        for (String orderItem : orderItems) {
-            if (!validateOrderItem(orderItem, uniqueItems)) {
-                return false;
+            for (String orderItem : orderItems) {
+                if (!validateOrderItem(orderItem, uniqueItems)) {
+                    throw new IllegalArgumentException("잘못된 입력");
+                }
             }
-        }
 
-        return validateBeverage(orderItems);
+            return validateBeverage(orderItems);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private static boolean validateOrderItem(String orderItem, Set<String> uniqueItems) {
         String[] order = orderItem.split("-");
-        if (orderItem.length() > 20) {
+        try {
+
+            if (orderItem.length() > 20) {
+                throw new IllegalArgumentException("주문 개수 20개 초과");
+            }
+            if (order.length != 2) {
+                throw new IllegalArgumentException("잘못된 입력");
+            }
+            if (!menu.containsItem(order[0])) {
+                throw new IllegalArgumentException("중복 메뉴 입력");
+            }
+            if (!validateCount(order[1])) {
+                throw new IllegalArgumentException("잘못된 입력");
+            }
+            return uniqueItems.add(order[0]);
+        } catch (IllegalArgumentException e) {
             return false;
         }
-        if (order.length != 2) {
-            return false;
-        }
-        if (!menu.containsItem(order[0])) {
-            return false;
-        }
-        if (!validateCount(order[1])) {
-            return false;
-        }
-        return uniqueItems.add(order[0]);
     }
 
     private static boolean validateCount(String input) {
@@ -71,11 +80,17 @@ public class Validator {
     private static boolean validateBeverage(String[] orderItems) {
         Menu menuBoard = MenuBoard.create();
         Set<MenuType> type = new HashSet<>();
-        for (String orderItem : orderItems) {
-            String[] order = orderItem.split("-");
-            MenuType menuType = menuBoard.findMenuType(order[0]);
-            type.add(menuType);
+        try {
+
+            for (String orderItem : orderItems) {
+                String[] order = orderItem.split("-");
+                MenuType menuType = menuBoard.findMenuType(order[0]);
+                type.add(menuType);
+            }
+        } catch (IllegalArgumentException e) {
+            return false;
         }
         return type.size() != 1 || !type.contains(MenuType.BEVERAGE);
+
     }
 }
