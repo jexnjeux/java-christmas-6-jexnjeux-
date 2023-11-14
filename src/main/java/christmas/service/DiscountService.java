@@ -11,6 +11,10 @@ public class DiscountService {
 
     public DiscountService() {
         this.discountDetails = new HashMap<>();
+        discountDetails.put("christmas", 0);
+        discountDetails.put("weekdays", 0);
+        discountDetails.put("weekends", 0);
+        discountDetails.put("special", 0);
         this.promotionService = new PromotionService();
     }
 
